@@ -1,0 +1,7 @@
+{
+    "baseUrl": "http://automationpractice.com",
+    "includeShadowDom": true,
+    "chromeWebSecurity": true,
+    "viewportHeight": 1080,
+    "viewportWidht": 1920
+}
