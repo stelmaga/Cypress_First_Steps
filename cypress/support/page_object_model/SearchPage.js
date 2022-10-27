@@ -43,7 +43,7 @@ class SearchPage {
         this.cartIcon.trigger("mouseover");
     }
 
-    closeShoppingPopup(text){
+    closeShoppingPopup(){
         this.shoppingPopupButton.click();
     }
 

@@ -3,5 +3,7 @@
     "includeShadowDom": true,
     "chromeWebSecurity": true,
     "viewportHeight": 1080,
-    "viewportWidht": 1920
+    "viewportWidht": 1920,
+    "ignoreTestFiles": ["*.js", "*.md"],
+    "testFiles": "**/*.feature"
 }

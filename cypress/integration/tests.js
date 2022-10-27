@@ -1,54 +1,57 @@
 /// <reference types="cypress" />
 import PageHeader from "../support/page_object_model/PageHeader";
-import SignInForm from "../support/page_object_model/SignInForm";
 import AuthenticationPage from "../support/page_object_model/AuthenticationPage";
 import SearchPage from "../support/page_object_model/SearchPage";
 import ShoppingCartPage from "../support/page_object_model/ShoppingCartPage";
+import SignInForm from "../support/page_object_model/SignInForm";
+import RandomEmailGenerator from "../integration/utils.js";
 
 describe("E2E tests", () => {
 
-    it("Search by valid data", () => {
+    it("User can search a product", () => {
         // When I go to “http://automationpractice.com/index.php“ site
         cy.visit("/")
         // And I type 'Printed dress' in the elastic search field
         PageHeader.search("Printed dress")
         // Then 5 goods are presented in the elastic search dropdown
-        cy.verifySearchDropdown(5);
+        SearchPage.searchDropdown.should("have.length", 5);
         // When I click [Search] button
         PageHeader.clickSearch();
         // Then search results block is presented
         cy.verifyHeaderTitle("Search");
         // And 5 goods are presented in results block
-        cy.verifyProductsNumber(5);
+        SearchPage.productBlock.should("have.length", 5);
     })
 
-    it("Registration with correct data", () => {
+    it.only("User can registrate with correct data", () => {
         // When I go to “http://automationpractice.com/index.php“ site
         cy.visit("/")
         // And I click [Sign in] button
         PageHeader.clickSignIn();
         // And  I fill ‘email address’ field in Create an account block
         cy.verifyHeaderTitle("Authentication");
-        AuthenticationPage.fillEmailCreateField();
+        AuthenticationPage.fillEmailCreateField(RandomEmailGenerator.randomEmail());
         // And I click [Create an account] button in Create an account block
         AuthenticationPage.clickCreateSubmitButton();
         // Then create an account page is presented
+        cy.url({ timeout: 12000 }).should("contain", "account-creation")
         cy.verifyHeaderTitle("Create an account");
         // When I fill all mandatory fields on create an account page
         // And I click [Register] button on create an account page
-        cy.correctSignUp();
+        cy.correctSignUpForm();
+        SignInForm.clickRegisterButton();
         // Then I’m logged in to application
         cy.verifyHeaderTitle("My account");
         PageHeader.accountName.should("contain", "Tester Testowy")
     })
 
-    it.only("Add to Cart", () => {
+    it("User can walk through entire checkout flow process", () => {
         // When I go to “http://automationpractice.com/index.php“ site
-        cy.visit("/")
-        // And I type 'Dress' in the elastic search field
-        PageHeader.search("Dress")
-        // And I click [Search] button
-        PageHeader.clickSearch();
+        // // And I type 'Dress' in the elastic search field
+        // PageHeader.search("Dress")
+        // // And I click [Search] button
+        // PageHeader.clickSearch();
+        cy.visit("/index.php?controller=search&orderby=position&orderway=desc&search_query=Dress&submit_search=")
         // Then search results block is presented
         cy.verifyHeaderTitle("Search");
         // And at least 1 good is presented in result block
@@ -65,13 +68,13 @@ describe("E2E tests", () => {
         // Then expanded Cart popup is presented
         SearchPage.cartBlock.should("be.visible")
         // And 1 good is presented in Cart popup
-        cy.verifyCartProductNumber(1);
+        SearchPage.cartProductNumber.should("contain", 1);
         // When I click [Check out] button in expanded Cart popup
         SearchPage.clickCheckOut();
         // Then shopping-cart summary page is presenting
         cy.verifyHeaderTitle("Your shopping cart");
         // And 1 good is presented on shopping-cart summary page
-        cy.verifyCartProductQuantity("1 Product");
+        ShoppingCartPage.verifyCartProductQuantity("1 Product");
         // cy.get("#cart_summary").find(".cart_product").eq(2).should("not.exist")
         ShoppingCartPage.productRow.eq(2).should("not.exist")
     })

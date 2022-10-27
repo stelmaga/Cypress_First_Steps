@@ -10,7 +10,11 @@ class ShoppingCartPage {
     search(text){
         this.searchField.type(text);
     }
-    
+
+    verifyCartProductQuantity(text){
+        this.productQuantity.should("contain", (text))
+    }
+
 }
 
 export default new ShoppingCartPage();
