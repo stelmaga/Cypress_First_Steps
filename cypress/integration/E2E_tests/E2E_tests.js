@@ -10,20 +10,20 @@ Given('User opens a store page', () => {
     cy.visit("/")
 })
 
-When('User types in a "Printed dress" in a search field', () => {
-    PageHeader.search("Printed dress")
+When('User types in a {string} in a search field', (productName) => {
+    PageHeader.search(productName)
 })
 
-Then('Dropdown with 5 propositions appears', () => {
-    SearchPage.searchDropdown.should("have.length", 5)
+Then('Dropdown with {int} propositions appears', (propositionsNumber) => {
+    SearchPage.searchDropdown.should("have.length", propositionsNumber)
 })
 
 When('User clicks on Search button', () => {
     PageHeader.clickSearch()
 })
 
-Then('Page with 5 search results opens', () => {
-    SearchPage.productBlock.should("have.length", 5)
+Then('Page with {int} search results opens', (productsNumber) => {
+    SearchPage.productBlock.should("have.length", productsNumber)
 })
 
 When ('User clicks Sign in button', () => {
@@ -31,38 +31,38 @@ When ('User clicks Sign in button', () => {
 })
 
 Then ('Authentication page is presented', () => {
-    cy.verifyHeaderTitle("Authentication")
+    cy.verifyHeaderTitleContains("Authentication")
 })  
 
 When ('User fills email address field with correct mail', () => {
     AuthenticationPage.fillEmailCreateField(RandomEmailGenerator.randomEmail())
 })
 
-And ('User clicks Create an account button', () => {
+When ('User clicks Create an account button', () => {
     AuthenticationPage.clickCreateSubmitButton()
 })
 
 Then ('Create an account page is presented', () => {
     cy.url({ timeout: 12000 }).should("contain", "account-creation")
-    cy.verifyHeaderTitle("Create an account")
+    cy.verifyHeaderTitleContains("Create an account")
 })
 
 When ('User fills all mandatory fields', () => {
     cy.correctSignUpForm()
 })
 
-And ('User clicks Register button', () => {
+When ('User clicks Register button', () => {
     SignInForm.clickRegisterButton();
 })
 
 Then ('User is logged in to application', () => {
-    cy.verifyHeaderTitle("My account")
+    cy.verifyHeaderTitleContains("My account")
     PageHeader.accountName.should("contain", "Tester Testowy")
 })
 
-Given ('User has a search result page with at least 1 good presented opened', () => {
+Given ('User has opened a search result page with at least 1 good presented', () => {
     cy.visit("/index.php?controller=search&orderby=position&orderway=desc&search_query=Dress&submit_search=")
-    cy.verifyHeaderTitle("Search");
+    cy.verifyHeaderTitleContains("Search");
     SearchPage.productBlock.eq(0).should("be.visible")
 })
 
@@ -78,21 +78,26 @@ When ('User closes a confirmation popup', () => {
     SearchPage.closeShoppingPopup();
 })
 
-And ('User moves mouse coursor on “Cart“ icon', () => {
+When ('User moves mouse coursor on “Cart“ icon', () => {
     SearchPage.openCartPopup();
 })
 
-Then ('Expanded Cart popup with 1 good is presented', () => {
+Then ('Expanded Cart popup is presented', () => {
     SearchPage.cartBlock.should("be.visible")
-    SearchPage.cartProductNumber.should("contain", 1);
+})
+
+Then ('{int} good is presented in extand popup', (productsAmount) => {
+    SearchPage.cartProductNumber.should("contain", productsAmount);
 })
 
 When ('User clicks Check out button in expanded Cart popup', () => {
     SearchPage.clickCheckOut();
 })
 
-Then ('Shopping-cart summary page with 1 good is presented',() => {
-    cy.verifyHeaderTitle("Your shopping cart");
-    ShoppingCartPage.verifyCartProductQuantity("1 Product");
-    ShoppingCartPage.productRow.eq(2).should("not.exist")
+Then ('Shopping-cart summary page is presented',() => {
+    cy.verifyHeaderTitleContains("Your shopping cart");
+})
+
+Then ('{string} is presented on Shopping-cart summary page',(productQuantity) => {
+    ShoppingCartPage.verifyCartProductQuantity(productQuantity);
 })
