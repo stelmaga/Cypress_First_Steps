@@ -16,7 +16,7 @@ class PageHeader {
     }
 
     get navigationHeader(){
-        return cy.get(".page-heading", { timeout: 8000 })
+        return cy.get(".page-heading")
     }
 
     search(text){

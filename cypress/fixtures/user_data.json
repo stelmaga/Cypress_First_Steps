@@ -1,0 +1,11 @@
+{
+    "firstName": "Tester",
+    "secondName": "Testowy",
+    "password": "Password123!",
+    "company": "Company",
+    "address1": "PO Box 515381",
+    "city" : "Los Angeles",
+    "state": 1,
+    "postcode": 90001,
+    "mobilePhone" : 123456789
+}
