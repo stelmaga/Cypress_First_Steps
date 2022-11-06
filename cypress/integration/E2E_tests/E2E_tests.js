@@ -94,10 +94,11 @@ When ('User clicks Check out button in expanded Cart popup', () => {
     SearchPage.clickCheckOut();
 })
 
-Then ('Shopping-cart summary page is presented',() => {
+Then ('Shopping-cart summary page is presented', () => {
     cy.verifyHeaderTitleContains("Your shopping cart");
 })
 
-Then ('{string} is presented on Shopping-cart summary page',(productQuantity) => {
+Then ('{string} is presented on Shopping-cart summary page', (productQuantity) => {
     ShoppingCartPage.verifyCartProductQuantity(productQuantity);
 })
+

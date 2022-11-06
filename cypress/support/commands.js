@@ -2,12 +2,6 @@
 import SignInForm from "../support/page_object_model/SignInForm";
 import PageHeader from "../support/page_object_model/PageHeader";
 
-// before(() => {
-//     cy.fixture("user_data.json").then( function (data) {
-//         this.data = data;
-//         })
-//     })
-
 Cypress.Commands.add('correctSignUpForm', function () {
     cy.fixture("user_data.json").then( function (data) {
         SignInForm.fillFirstName(data.firstName)
