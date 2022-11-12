@@ -1,4 +1,4 @@
-/// <reference path=“./index.d.ts” />
+/// <reference types="cypress" />
 import SignInForm from "../support/page_object_model/SignInForm";
 import PageHeader from "../support/page_object_model/PageHeader";
 

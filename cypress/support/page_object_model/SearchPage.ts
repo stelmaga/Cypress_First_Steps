@@ -47,10 +47,6 @@ class SearchPage {
         this.shoppingPopupButton.click();
     }
 
-    search(text){
-        this.searchField.type(text);
-    }
-    
 }
 
 export default new SearchPage();
