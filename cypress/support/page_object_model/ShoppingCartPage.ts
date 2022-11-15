@@ -7,10 +7,6 @@ class ShoppingCartPage {
         return cy.get(".cart_product")
     }
 
-    search(text){
-        this.searchField.type(text);
-    }
-
     verifyCartProductQuantity(text){
         this.productQuantity.should("contain", (text))
     }

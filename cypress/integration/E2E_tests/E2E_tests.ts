@@ -10,11 +10,11 @@ Given('User opens a store page', () => {
     cy.visit("/")
 })
 
-When('User types in a {string} in a search field', (productName) => {
+When('User types in a {string} in a search field', (productName: string) => {
     PageHeader.search(productName)
 })
 
-Then('Dropdown with {int} propositions appears', (propositionsNumber) => {
+Then('Dropdown with {int} propositions appears', (propositionsNumber: number) => {
     SearchPage.searchDropdown.should("have.length", propositionsNumber)
 })
 
@@ -22,7 +22,7 @@ When('User clicks on Search button', () => {
     PageHeader.clickSearch()
 })
 
-Then('Page with {int} search results opens', (productsNumber) => {
+Then('Page with {int} search results opens', (productsNumber: number) => {
     SearchPage.productBlock.should("have.length", productsNumber)
 })
 
@@ -86,7 +86,7 @@ Then ('Expanded Cart popup is presented', () => {
     SearchPage.cartBlock.should("be.visible")
 })
 
-Then ('{int} good is presented in extand popup', (productsAmount) => {
+Then ('{int} good is presented in extand popup', (productsAmount: number) => {
     SearchPage.cartProductNumber.should("contain", productsAmount);
 })
 
@@ -98,7 +98,7 @@ Then ('Shopping-cart summary page is presented', () => {
     cy.verifyHeaderTitleContains("Your shopping cart");
 })
 
-Then ('{string} is presented on Shopping-cart summary page', (productQuantity) => {
+Then ('{string} is presented on Shopping-cart summary page', (productQuantity: number) => {
     ShoppingCartPage.verifyCartProductQuantity(productQuantity);
 })
 

@@ -19,7 +19,7 @@ class PageHeader {
         return cy.get(".page-heading")
     }
 
-    search(text){
+    search(text: string){
         this.searchField.type(text);
     }
 
